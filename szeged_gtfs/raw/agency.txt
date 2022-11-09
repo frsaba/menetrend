@@ -1,0 +1,4 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_phone,agency_lang
+1,"Volánbusz Zrt.",https://www.volanbusz.hu/hu/menetrendek/helyi-jaratok/szeged,Europe/Budapest,+36-62-421-388,hu
+2,"SZKT",http://www.szkt.hu,Europe/Budapest,+36-80-820-500,hu
+3,"MÁV-START",https://www.mavcsoport.hu/,Europe/Budapest,+36-1-349-4949,hu

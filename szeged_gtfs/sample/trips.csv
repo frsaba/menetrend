@@ -1,0 +1,36 @@
+route_id,service_id,trip_id,trip_headsign,direction_id,shape_id,wheelchair_accessible
+34,MN,275/0,"Kiskundorozsma, Sziksósfürdő",0,3263440,1
+34,MN,275/1,"Kiskundorozsma, Sziksósfürdő",0,3263440,1
+34,TO,279/0,"Kiskundorozsma, Sziksósfürdő",0,3263440,1
+34,IEA,1017/0,"Mars tér",1,3263439,1
+18,MI,153/0,"Repülőtér",0,3234265,1
+18,MI,153/1,"Repülőtér",0,3234265,1
+18,MI,153/2,"Repülőtér",0,3234265,1
+18,T,717/0,"Krematórium",0,6307491,1
+18,T,717/1,"Krematórium",0,6307491,1
+18,T,333/0,"Repülőtér",0,6307492,1
+18,T,333/1,"Repülőtér",0,6307492,1
+18,T,719/0,"Mars tér",1,6307494,1
+18,T,719/1,"Mars tér",1,6307494,1
+18,MI,164/0,"Mars tér",1,4715841,1
+18,MI,164/1,"Mars tér",1,4715841,1
+18,T,157/0,"Mars tér",1,3234264,1
+18,T,157/1,"Mars tér",1,3234264,1
+29,MN,587/0,"Szeged vasútállomás",1,2896706,1
+52,SZN-hidi,1272/14,"Mars tér – Sziksósfürdő",1,6307497,1
+52,SZN-hidi,1272/15,"Mars tér – Sziksósfürdő",1,6307497,1
+52,SZN-hidi,1272/16,"Mars tér – Sziksósfürdő",1,6307497,1
+52,SZN-hidi,1272/17,"Mars tér – Sziksósfürdő",1,6307497,1
+23,SZN,1275/0,"Tápé",0,2897018,1
+23,MSZ,1276/0,"Tápé",0,2897018,1
+23,SZN,1277/0,"Mars tér",1,3234269,1
+23,MSZ,1278/0,"Mars tér",1,3234269,1
+24,SZN,1281/0,"Mars tér",1,3234270,1
+24,MSZ,1282/0,"Mars tér",1,3234270,1
+70,T,1283/0,"Mars tér",1,3234272,1
+70,SZN,1284/0,"Mars tér",1,3234272,1
+70,MSZ,1285/0,"Mars tér",1,3234272,1
+68,SZN,1287/0,"Mars tér – Gyálarét",0,11550318,1
+68,SZN,1287/1,"Mars tér – Gyálarét",0,11550318,1
+68,SZN,1287/2,"Mars tér – Gyálarét",0,11550318,1
+68,SZN,1287/3,"Mars tér – Gyálarét",0,11550318,1

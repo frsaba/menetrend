@@ -1,0 +1,59 @@
+route_id,route_short_name,route_long_name,route_type
+2,10,"Tarján, Víztorony tér / Klinikák",3
+6,19,"Makkosház / Tarján, Víztorony tér",3
+7,2,Európa liget / Szeged vasútállomás,2
+8,20,"Petőfitelep, Fő tér / Alsóváros, Vadkerti tér",1
+10,21,Újpetőfitelep / Szeged vasútállomás,1
+11,3,Tarján / Vadaspark,2
+12,36,Honvéd tér / Kiskundorozsma,1
+13,3F,Tarján / Fonógyári út,2
+14,4,Tarján / Kecskés,2
+15,5,"Körtöltés utca / Újszeged, Gyermekkórház",3
+16,60,Mars tér / Szőreg,1
+17,60Y,Mars tér / Szőreg,1
+18,64,Mars tér / Kereskedő köz / Repülőtér,1
+20,70,"Mars tér / Újszeged, Füvészkert",1
+21,71,"Szegedi Ipari Logisztikai Központ / Mars tér / Marostő, Katalin utca",1
+22,72,"Szegedi Ipari Logisztikai Központ / Mars tér / Marostő, Erdélyi tér",1
+23,73,Mars tér / Tápé,1
+24,73Y,Mars tér / Tápé,1
+27,75,Mars tér / Kiskundorozsma,1
+28,76,Mars tér / Szentmihály,1
+29,77,Szeged vasútállomás / Baktó,1
+30,78,Béketelep > Rókusi körút > Mars tér,1
+31,78A,Rókusi körút > Béketelep > Mars tér,1
+33,79H,Mars tér / Fehértói halgazdaság,1
+34,7F,Mars tér / Sziksósfürdő,1
+35,8,Makkosház / Klinikák,3
+36,84,"Makkosház / Újszeged, Gabonakutató",1
+39,90,"Újszeged, Gabonakutató / Szeged vasútállomás",1
+40,90F,"Petőfitelep, Fő tér / Vadaspark (Textilgyári út)",1
+41,90H,Lugas utca / Szegedi Ipari Logisztikai Központ,1
+42,77A,Mars tér / Baktó,1
+44,12,Tarján / Belvárosi temető / Tarján,1
+45,91E,Széchenyi tér > Újszeged > Szőreg > Mars tér,1
+46,92E,Széchenyi tér > Petőfitelep > Tarján,1
+47,93E,Széchenyi tér > Újrókus > Kiskundorozsma,1
+48,94E,Széchenyi tér > Alsóváros > Kecskéstelep,1
+49,24,"Petőfitelep, Fő tér / Klebelsbergtelep",1
+50,32,"Honvéd tér / Újszeged, víztorony",1
+51,67,Sziksósfürdő / Mars tér / Szőreg,1
+52,67Y,Sziksósfürdő / Mars tér / Szőreg,1
+53,71A,"Mars tér / Marostő, Katalin utca",1
+54,72A,"ELI lézerközpont / Mars tér / Marostő, Erdélyi tér",1
+55,77Y,Mars tér / Baktó,1
+58,76Y,Mars tér / Szentmihály,1
+59,2K,Európa liget / Szeged vasútállomás,2
+60,19K,Makkosház / Széchenyi tér,3
+61,72K,"Mars tér / Marostő, Erdélyi tér",1
+62,73K,Széchenyi tér / Tápé,1
+63,74K,Széchenyi tér / Kecskéstelep,1
+64,77K,Széchenyi tér / Baktó,1
+65,40C,"Tarján, Víztorony tér / Szegedi Olimpiai Központ",1
+66,4V,Anna kút / Kecskés,2
+68,74,Tápé / Mars tér / Gyálarét,1
+69,74Y,Tápé / Mars tér / Gyálarét,1
+70,74A,Mars tér / Gyálarét,1
+74,1,Szeged / Hódmezővásárhely,2
+75,6,"Vértói út / Újszeged, Gyermekkórház",3
+76,9,Lugas utca / Bakay Nándor utca,3

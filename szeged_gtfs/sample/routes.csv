@@ -1,0 +1,20 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+2,2,10,"Tarján, Víztorony tér / Klinikák",,800,,00CC00,FFFFFF
+6,2,19,"Makkosház / Tarján, Víztorony tér",,800,,00CC00,FFFFFF
+7,2,2,"Európa liget / Szeged vasútállomás",,0,,FFFF00,000000
+8,1,20,"Petőfitelep, Fő tér / Alsóváros, Vadkerti tér",,3,,0000FF,FFFFFF
+10,1,21,"Újpetőfitelep / Szeged vasútállomás",,3,,0000FF,FFFFFF
+11,2,3,"Tarján / Vadaspark",,0,,FFFF00,000000
+12,1,36,"Honvéd tér / Kiskundorozsma",,3,,0000FF,FFFFFF
+13,2,3F,"Tarján / Fonógyári út",,0,,FFFF00,000000
+14,2,4,"Tarján / Kecskés",,0,,FFFF00,000000
+15,2,5,"Körtöltés utca / Újszeged, Gyermekkórház",,800,,00CC00,FFFFFF
+16,1,60,"Mars tér / Szőreg",,3,,0000FF,FFFFFF
+17,1,60Y,"Mars tér / Szőreg",,3,,0000FF,FFFFFF
+18,1,64,"Mars tér / Kereskedő köz / Repülőtér",,3,,0000FF,FFFFFF
+20,1,70,"Mars tér / Újszeged, Füvészkert",,3,,0000FF,FFFFFF
+21,1,71,"Szegedi Ipari Logisztikai Központ / Mars tér / Marostő, Katalin utca",,3,,0000FF,FFFFFF
+22,1,72,"Szegedi Ipari Logisztikai Központ / Mars tér / Marostő, Erdélyi tér",,3,,0000FF,FFFFFF
+23,1,73,"Mars tér / Tápé",,3,,0000FF,FFFFFF
+24,1,73Y,"Mars tér / Tápé",,3,,0000FF,FFFFFF
+27,1,75,"Mars tér / Kiskundorozsma",,3,,0000FF,FFFFFF
