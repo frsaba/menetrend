@@ -2,9 +2,20 @@
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
-// Vuetify
 import { createVuetify } from 'vuetify'
 
-export default createVuetify(
-  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-)
+import colors from 'vuetify/lib/util/colors'
+
+export default createVuetify({
+  theme: {
+    themes: {
+      light: {
+        dark: false,
+        colors: {
+          primary: colors.blue.darken1, 
+          secondary: colors.blue.lighten4,
+        }
+      },
+    },
+  },
+})

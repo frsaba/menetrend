@@ -1,11 +1,16 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, Request, Response, json } from 'express';
 import dotenv from 'dotenv';
 import { IJarat } from './interfaces/interfaces'
+
+import cors from 'cors'
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+
+app.use(cors())
+app.use(json())
 
 import mysql from 'mysql2/promise';
 var pool = mysql.createPool({
@@ -22,7 +27,11 @@ var pool = mysql.createPool({
 // });
 
 app.get('/routes', async (req: Request, res: Response) => {
-	let [rows, _]= await pool.execute('SELECT * FROM jarat');
+	if(req.query == undefined){
+		return res.send("Specify vehicle type")
+	}
+	let type = req.query["type"]
+	let [rows, _]= await pool.execute('SELECT jaratszam FROM jarat WHERE tipus = ?', [type]);
 	res.send(rows);
 });
 
