@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "@types/node": "^18.11.9",
+    "path": "^0.12.7",
     "roboto-fontface": "*",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",

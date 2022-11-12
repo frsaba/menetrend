@@ -2,9 +2,9 @@ import Home from './views/Home.vue'
 import Stops from './views/Stops.vue'
 import {createRouter, createWebHashHistory} from 'vue-router'
 
-const routes = [
-  { path: '/', component: Home },
-  { path: '/stops', component: Stops },
+export const routes = [
+  { path: '/', component: Home, name: "Főoldal", icon: "mdi-home" },
+  { path: '/stops', component: Stops, name: "Megállók", icon: "mdi-stop"},
 ]
 
 const router = createRouter({
