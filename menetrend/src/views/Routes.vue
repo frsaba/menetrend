@@ -3,8 +3,10 @@ import { defineComponent } from 'vue'
 import { get } from '@/utils/db-functions'
 import { IVehicleTypeInfo, IRouteNumber } from "@/types"
 import { useRouter } from 'vue-router';
+import RouteChip from '@/components/RouteChip.vue';
 
 export default defineComponent({
+	components: { RouteChip },
 	async setup(props) {
 		const router = useRouter();
 
@@ -29,13 +31,11 @@ export default defineComponent({
 </script>
 
 <template>
-	<v-card max-width="800">
+	<v-card max-width="1100">
 		<v-list-item v-for="type in vehicle_types" :key="type.id">
 			<h3 class="text-overline">{{type.nev}}</h3>
 			<v-container class="routes-container flex-wrap">
-				<v-chip size="x-large" variant="outlined" v-for="route in routes[type.id]" :key="route" :color="'#'+type.szin" @click="view_route(route)">
-					{{route.jaratszam}}
-				</v-chip>
+				<route-chip  v-for="route in routes[type.id]" :route_number="route.jaratszam" :key="route"/>
 			</v-container>
 		</v-list-item>
 	</v-card>

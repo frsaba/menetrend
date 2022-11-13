@@ -10,3 +10,18 @@ content-type: application/json
 {
 	"type" : 1
 }
+###
+GET http://localhost:3001/stops HTTP/1.1
+content-type: application/json
+
+{
+}
+
+###
+GET http://localhost:3001/routecolors HTTP/1.1
+content-type: application/json
+
+{
+	"route" : "67"
+}
+###

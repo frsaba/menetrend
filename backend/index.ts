@@ -1,8 +1,9 @@
 import express, { Express, Request, Response, json } from 'express';
 import dotenv from 'dotenv';
-import { IJarat } from './interfaces/interfaces'
+import { IJarat, IStopInfo } from './interfaces/interfaces'
 
 import cors from 'cors'
+import morgan from 'morgan'
 
 dotenv.config();
 
@@ -10,6 +11,7 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.use(cors())
+app.use(morgan("tiny"))
 app.use(json())
 
 import mysql from 'mysql2/promise';
@@ -41,7 +43,20 @@ app.get('/vehicle_types', async (req: Request, res: Response) => {
 });
 
 app.get('/stops', async (req: Request, res: Response) => {
-	let [rows, _]= await pool.execute('SELECT * FROM megallo');
+	let [stops, _] = await pool.execute('SELECT * FROM megallo');
+	for (let stop of (stops as IStopInfo[]) ){
+		let [routes_array, _] = (await pool.execute("SELECT DISTINCT(jaratszam) as jarat FROM utvonal WHERE megallo = ?", [stop.megallonev]))
+		// routes: [ { jarat: '1' } , jarat: '76' }...]
+
+		let routes = (routes_array as {jarat: string}[]).map(r => r.jarat);
+		// routes: [ '1' ,'76' ...]
+		stop.jaratok = routes;
+	}
+	res.send(stops);
+});
+
+app.get('/routecolors', async (req: Request, res: Response) => {
+	let [rows, _]= await pool.execute('SELECT jaratszam, szin FROM jarat INNER JOIN jarmutipus ON tipus = jarmutipus.id');
 	res.send(rows);
 });
 

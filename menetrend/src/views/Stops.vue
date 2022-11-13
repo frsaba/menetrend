@@ -5,6 +5,7 @@ import { IVehicleTypeInfo, IRouteNumber, IStopInfo } from "@/types"
 import { useRouter } from 'vue-router';
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next';
+import RouteChip from '@/components/RouteChip.vue';
 // add to component
 
 
@@ -12,6 +13,7 @@ import { VueGoodTable } from 'vue-good-table-next';
 export default defineComponent({
 	components: {
 		VueGoodTable,
+		RouteChip,
 	},
 	async setup(props) {
 		const router = useRouter();
@@ -30,6 +32,7 @@ export default defineComponent({
 				field: 'megallonev',
 			},
 			{ label: 'Cím', field: 'cim' },
+			{ label: 'Járatok', field: 'jaratok' },
 		]
 
 		const view_route = (r: string) => {
@@ -51,8 +54,27 @@ export default defineComponent({
 	<v-card max-width="800" class="mt-3">
 		<vue-good-table
 			:columns="headers"
-			:rows="stops" 
-			:search-options="{enabled: true, placeholder: 'Keresés',}" />
+			:rows="stops"
+			max-height="75%"
+			:search-options="{enabled: true, placeholder: 'Keresés',}"
+			:pagination-options="{
+				enabled: false,
+				mode: 'records',
+				perPage: 10,
+				nextLabel: 'Következő',
+				prevLabel: 'Előző',
+				ofLabel: ' | összesen',
+				allLabel: 'All', 
+			}">
+			<template #table-row="props">
+				<div class="flex-wrap routes-container" v-if="props.column.field == 'jaratok'">
+					<route-chip v-for="route in props.row.jaratok" :route_number="route" :key="route" />
+				</div>
+				<span v-else>
+					{{props.formattedRow[props.column.field]}}
+				</span>
+			</template>
+		</vue-good-table>
 
 	</v-card>
 </template>
