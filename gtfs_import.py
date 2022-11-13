@@ -131,6 +131,14 @@ if __name__ == "__main__":
     stops = csv_to_dict("szeged_gtfs/processed/stops.csv")
     routes = csv_to_dict("szeged_gtfs/processed/routes.csv")
 
+    # print(len(stops))
+    # for i, a in enumerate(stops):
+    #      if any(a["stop_name"] == b["stop_name"] for b in stops[:i]):
+    #         # pprint(a)
+    #         stops.remove(a)
+
+    # pprint(len(stops))
+
     # write_str(dest + "insert_megallo.sql", sqlify("megallo", stops,
     #           {"cim": "address", "megallonev": "stop_name"}))
 
@@ -158,10 +166,15 @@ if __name__ == "__main__":
     #           {"jaratszam": "route_number", "ora": "hour", "perc": "minute", "irany": "direction"}))
 
 
-    # # Útvonal tábla
-    # paths_table = [{"route_number": trip_to_route_number[row["trip_id"]],
-    #                 "arrival_time": row["arrival_time"],
-    #                 "stop_name": stop_names.get(row["stop_id"])} for row in stop_times]
+    # Útvonal tábla
+
+    paths_table = [{"route_number": trip_to_route_number[row["trip_id"]],
+                    "arrival_time": int(row["arrival_time"]),
+                    "stop_sequence": int(row["stop_sequence"]) - 1,
+                    "stop_name": stop_names.get(row["stop_id"])} for row in stop_times if trip_direction[row["trip_id"]] == '1']
+
+    write_str(dest + "insert_utvonal.sql", sqlify("utvonal", paths_table,
+              {"megallo": "stop_name", "jaratszam": "route_number", "erkezes":"arrival_time", "sorszam": "stop_sequence"}))
 
     # Befogad tábla
     # compatibility = [*set((stop_names.get(row["stop_id"]),

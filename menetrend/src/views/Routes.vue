@@ -1,27 +1,26 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios from "axios"
-import { IVehicleTypeInfo, IRouteNumber } from "../types"
+import { get } from '@/utils/db-functions'
+import { IVehicleTypeInfo, IRouteNumber } from "@/types"
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
 	async setup(props) {
-		const vehicle_types: IVehicleTypeInfo[] = (await axios.get(import.meta.env.VITE_API_URL + "/vehicle_types")).data
-		console.log(vehicle_types)
-		const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-		const route_array: IRouteNumber[] = await Promise.all(
-			vehicle_types.map(async (r: IVehicleTypeInfo) => (await axios.get(import.meta.env.VITE_API_URL + "/routes",
-				{ params: { type: r.id } })).data))
+		const router = useRouter();
+
+		const vehicle_types: IVehicleTypeInfo[] = await get("vehicle_types");
+
+		const route_array: IRouteNumber[] = await Promise.all(vehicle_types.map(async r => await get("routes", { type: r.id })))
 
 		const routes = Object.fromEntries(vehicle_types.map((vtype, i) => [vtype.id, route_array[i]]))
 
 		const view_route = (r: string) => {
-			console.log(r);
+			router.push({ path: "/route", params: { routename: r } })
 		}
 
 		return {
 			vehicle_types,
 			routes,
-			capitalize,
 			view_route
 		}
 	}

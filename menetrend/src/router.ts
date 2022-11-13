@@ -1,5 +1,5 @@
-import Routes from './views/Routes.vue'
-import Stops from './views/Stops.vue'
+import Routes from '@/views/Routes.vue'
+import Stops from '@/views/Stops.vue'
 import {createRouter, createWebHashHistory} from 'vue-router'
 
 export const routes = [

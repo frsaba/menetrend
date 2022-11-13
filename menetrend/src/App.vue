@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { routes } from './router'
+import { routes } from '@/router'
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
