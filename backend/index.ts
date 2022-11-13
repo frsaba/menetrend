@@ -40,6 +40,11 @@ app.get('/vehicle_types', async (req: Request, res: Response) => {
 	res.send(rows);
 });
 
+app.get('/stops', async (req: Request, res: Response) => {
+	let [rows, _]= await pool.execute('SELECT * FROM megallo');
+	res.send(rows);
+});
+
 app.listen(port, () => {
 	console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
