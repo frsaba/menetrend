@@ -4,7 +4,7 @@ content-type: application/json
 {
 }
 ###
-GET http://localhost:3001/routes HTTP/1.1
+GET http://localhost:3001/routes?type=2 HTTP/1.1
 content-type: application/json
 
 {
@@ -18,7 +18,7 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3001/routecolors HTTP/1.1
+GET http://localhost:3001/path?route=67 HTTP/1.1
 content-type: application/json
 
 {

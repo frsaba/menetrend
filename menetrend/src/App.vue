@@ -7,7 +7,11 @@ export default defineComponent({
 	name: 'App',
 	setup(props, context) {
 		const drawer = ref(true);
-		const route_items = routes.map(r => ({ title: r.name, value: r.path, prependIcon: r.icon }));
+
+		const route_items = [
+			{ value: '/', title: "Járatok", prependIcon: "mdi-bus" },
+			{ value: '/stops', title: "Megállók", prependIcon: "mdi-stop" }
+		]
 		const router = useRouter();
 		const navigate = (path: string) => {
 			router.push({ path })
@@ -48,7 +52,7 @@ export default defineComponent({
 				</v-list>
 			</v-navigation-drawer>
 			<Suspense>
-				<div class="main-content d-flex justify-center">
+				<div class="main-content d-flex justify-center ma-3">
 					<router-view />
 				</div>
 			</Suspense>
@@ -57,3 +61,8 @@ export default defineComponent({
 </template>
 
 
+<style scoped>
+.main-content{
+	max-width: 1000px;
+}
+</style>

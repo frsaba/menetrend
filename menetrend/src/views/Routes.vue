@@ -2,13 +2,11 @@
 import { defineComponent } from 'vue'
 import { get } from '@/utils/db-functions'
 import { IVehicleTypeInfo, IRouteNumber } from "@/types"
-import { useRouter } from 'vue-router';
 import RouteChip from '@/components/RouteChip.vue';
 
 export default defineComponent({
 	components: { RouteChip },
 	async setup(props) {
-		const router = useRouter();
 
 		const vehicle_types: IVehicleTypeInfo[] = await get("vehicle_types");
 
@@ -16,14 +14,9 @@ export default defineComponent({
 
 		const routes = Object.fromEntries(vehicle_types.map((vtype, i) => [vtype.id, route_array[i]]))
 
-		const view_route = (r: string) => {
-			router.push({ path: "/route", params: { routename: r } })
-		}
-
 		return {
 			vehicle_types,
 			routes,
-			view_route
 		}
 	}
 })

@@ -1507,4 +1507,4 @@ INSERT INTO utvonal (megallo, jaratszam, erkezes, sorszam) VALUES
 ('Fonógyári út','75',19,16),
 ('Tanács utca','71A',5,5),
 ('Agyagos utca','84',16,10)
-ON DUPLICATE KEY UPDATE erkezes = GREATEST(VALUES(erkezes), erkezes);
+ON DUPLICATE KEY UPDATE erkezes = LEAST(VALUES(erkezes), erkezes);

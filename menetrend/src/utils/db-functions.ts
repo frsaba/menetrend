@@ -1,7 +1,7 @@
 import { IVehicleTypeInfo } from "@/types";
 import axios from "axios"
 
-export async function get(path: string, params?: object) {
+export async function get(path: string, params?: any) {
 
 	let response = await axios.get(import.meta.env.VITE_API_URL + "/" + path, { params: params })
 
@@ -24,3 +24,4 @@ export async function get_route_color(route?: string) {
 
 	return route_colors_cache[route];
 }
+
