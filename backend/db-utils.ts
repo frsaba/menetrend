@@ -10,6 +10,12 @@ var pool = mysql.createPool({
 });
 
 export async function query(sql : string, ...params : any[]){
-	let [rows, _] = await pool.execute(sql, params);
-	return rows;
+	try{
+		let [rows, _] = await pool.execute(sql, params);
+		return rows;
+	}catch(e){
+		console.log(e)
+		return e;
+	}
+
 }

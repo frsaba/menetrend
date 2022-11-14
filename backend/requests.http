@@ -25,3 +25,14 @@ content-type: application/json
 	"route" : "67"
 }
 ###
+
+GET http://localhost:3001/timetable HTTP/1.1
+content-type: application/json
+
+{
+	"route" : "75",
+	"stop" : "Szent János tér",
+	"direction" : 1
+}
+
+###

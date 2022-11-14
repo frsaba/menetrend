@@ -58,7 +58,7 @@ export default defineComponent({
 			max-height="75%"
 			:search-options="{enabled: true, placeholder: 'Keresés',}"
 			:pagination-options="{
-				enabled: false,
+				enabled: true,
 				mode: 'records',
 				perPage: 10,
 				nextLabel: 'Következő',

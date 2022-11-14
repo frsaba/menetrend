@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 <template>
 
-	<v-chip size="x-large" variant="outlined" :color="color"  @click="view_route">
+	<v-chip size="x-large" variant="elevated" :color="color"  @click="view_route">
 		{{route_number}}
 	</v-chip>
 </template>

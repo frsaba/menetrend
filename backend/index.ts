@@ -21,7 +21,7 @@ app.use(json())
 // });
 
 app.get('/routes', async (req: Request, res: Response) => {
-	if(req.query == undefined){
+	if (req.query == undefined) {
 		return res.send("Specify vehicle type")
 	}
 	let type = req.query["type"]
@@ -34,11 +34,11 @@ app.get('/vehicle_types', async (req: Request, res: Response) => {
 
 app.get('/stops', async (req: Request, res: Response) => {
 	let stops = await query('SELECT * FROM megallo');
-	for (let stop of (stops as IStopInfo[]) ){
+	for (let stop of (stops as IStopInfo[])) {
 		let routes_array = await query("SELECT DISTINCT(jaratszam) as jarat FROM utvonal WHERE megallo = ?", stop.megallonev)
 		// routes: [ { jarat: '1' } , jarat: '76' }...]
 
-		let routes = (routes_array as {jarat: string}[]).map(r => r.jarat);
+		let routes = (routes_array as { jarat: string }[]).map(r => r.jarat);
 		// routes: [ '1' ,'76' ...]
 		stop.jaratok = routes;
 	}
@@ -51,8 +51,22 @@ app.get('/routecolors', async (req: Request, res: Response) => {
 
 app.get('/path', async (req: Request, res: Response) => {
 	let route = req.query["route"];
-	let rows= await query('SELECT megallo, erkezes FROM utvonal WHERE jaratszam = ? ORDER BY sorszam', route);
+	let rows = await query('SELECT megallo, erkezes FROM utvonal WHERE jaratszam = ? ORDER BY sorszam', route);
 	res.send(rows);
+});
+
+app.get('/timetable', async (req: Request, res: Response) => {
+	let route = req.query["route"];
+	let stop = req.query["stop"];
+	let direction = req.query["direction"];
+
+	console.log(route,stop,direction)
+	res.send(await query(`
+	SELECT ora + FLOOR((perc + erkezes) / 60) % 24 as ora, 
+	(perc + erkezes) % 60 as perc 
+	FROM utvonal INNER JOIN indulas ON utvonal.jaratszam = indulas.jaratszam
+	WHERE indulas.jaratszam = ? AND irany = ?
+	AND utvonal.megallo = ?`, route, direction, stop));
 });
 
 app.listen(port, () => {
