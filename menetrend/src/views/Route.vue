@@ -17,25 +17,27 @@ export default defineComponent({
 		}
 
 		const color = await get_route_color(props.route_number);
-		const path = await get("path", { route: props.route_number });
+		let path = await get("path", { route: props.route_number });
 
 		const selected_stop = ref(path[0])
 
-		const first_stop = computed(() => direction.value ? path[0] : _.last(path))
-		const last_stop = computed(() => direction.value ? _.last(path) : path[0])
+		let first_stop = ref(path[0]) //I would use computed here, except it doesnt update when path direction is switched
+		let last_stop = ref(_.last(path))
 
 		const timetable = ref({});
 
 		const direction = ref(true);
 
 		watch(selected_stop, update_timetable)
+		watch(direction, () => path = path.reverse())
 		watch(direction, update_timetable)
-		// watch(direction, () => path = path.reverse())
 
 		async function update_timetable() {
 			let times: { ora: number, perc: number }[] =
 				await get("timetable", { route: props.route_number, stop: selected_stop.value.megallo, direction: direction.value ? 1 : 0 })
 			timetable.value = _.groupBy(times, x => x.ora)
+			first_stop.value = path[0];
+			last_stop.value = _.last(path) 
 		}
 
 
@@ -66,7 +68,7 @@ export default defineComponent({
 		<div class="d-flex">
 
 			<v-timeline side="end" align="start" truncate-line="both">
-				<v-timeline-item v-for="stop in path" :key="stop.megallo" :dot-color="color" :size="selected_stop.megallo == stop.megallo ? 'small' : 'x-small'" @click="selected_stop = stop">
+				<v-timeline-item v-for="(stop, index) in path" :key="stop.megallo + index+direction" :dot-color="color" :size="selected_stop.megallo == stop.megallo ? 'small' : 'x-small'" @click="selected_stop = stop">
 					<template v-slot:opposite>
 						{{stop.erkezes}}
 					</template>
