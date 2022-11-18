@@ -2,7 +2,7 @@
 import { get, get_route_color } from '@/utils/db-functions';
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import _, { update } from 'lodash';
+import _ from 'lodash';
 import RouteChip from '@/components/RouteChip.vue';
 
 export default defineComponent({

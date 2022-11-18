@@ -26,13 +26,22 @@ content-type: application/json
 }
 ###
 
-GET http://localhost:3001/timetable HTTP/1.1
+GET http://localhost:3001/arrivals HTTP/1.1
 content-type: application/json
 
 {
-	"route" : "75",
 	"stop" : "Szent János tér",
+	"hour" : 9,
 	"direction" : 1
+}
+
+###
+
+GET http://localhost:3001/firststop HTTP/1.1
+content-type: application/json
+
+{
+	"route" : "75"
 }
 
 ###

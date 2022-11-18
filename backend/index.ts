@@ -4,7 +4,7 @@ import { IJarat, IStopInfo } from './interfaces/interfaces'
 
 import cors from 'cors'
 import morgan from 'morgan'
-import { query } from './db-utils';
+import { query, query_flatten, query_single } from './db-utils';
 
 dotenv.config();
 
@@ -34,6 +34,7 @@ app.get('/vehicle_types', async (req: Request, res: Response) => {
 
 app.get('/stops', async (req: Request, res: Response) => {
 	let stops = await query('SELECT * FROM megallo');
+
 	for (let stop of (stops as IStopInfo[])) {
 		let routes_array = await query("SELECT DISTINCT(jaratszam) as jarat FROM utvonal WHERE megallo = ?", stop.megallonev)
 		// routes: [ { jarat: '1' } , jarat: '76' }...]
@@ -60,13 +61,59 @@ app.get('/timetable', async (req: Request, res: Response) => {
 	let stop = req.query["stop"];
 	let direction = req.query["direction"];
 
-	console.log(route,stop,direction)
+	console.log(route, stop, direction)
 	res.send(await query(`
 	SELECT ora + FLOOR((perc + erkezes) / 60) % 24 as ora, 
 	(perc + erkezes) % 60 as perc 
 	FROM utvonal INNER JOIN indulas ON utvonal.jaratszam = indulas.jaratszam
 	WHERE indulas.jaratszam = ? AND irany = ?
 	AND utvonal.megallo = ?`, route, direction, stop));
+});
+
+app.get('/routesatstop', async (req: Request, res: Response) => {
+	let stop = req.query["stop"] || req.body["stop"];
+	let rows = await query_flatten('SELECT jaratszam FROM utvonal WHERE megallo = ? ORDER BY jaratszam', stop);
+	res.send(rows);
+});
+
+app.get('/arrivals', async (req: Request, res: Response) => {
+	let stop = req.query["stop"] || req.body["stop"];
+	let hour = req.query["hour"] || req.body["hour"];
+	let direction = req.query["direction"] || req.body["direction"];
+	res.send(await query(`
+	SELECT indulas.jaratszam, ora + FLOOR((perc + erkezes) / 60) % 24 as ora, 
+	(perc + erkezes) % 60 as perc 
+	FROM utvonal INNER JOIN indulas ON utvonal.jaratszam = indulas.jaratszam
+	WHERE utvonal.megallo = ? and ora = ? and irany = ?`, stop, hour, direction));
+});
+
+app.get('/terminalstops', async (req: Request, res: Response) => {
+	let route = req.query["route"] || req.body["route"];
+	let rows = await query(`SELECT * FROM
+		(SELECT megallo as elso_megallo FROM utvonal
+		WHERE jaratszam = ?
+		ORDER BY utvonal.sorszam ASC
+		LIMIT 1 ) elso
+		INNER JOIN
+		(SELECT megallo as utolso_megallo FROM utvonal
+		WHERE jaratszam = ?
+		ORDER BY utvonal.sorszam DESC LIMIT 1) utolso`, route, route);
+
+	res.send((rows as object[])[0])
+});
+
+app.get('/firststop', async (req: Request, res: Response) => {
+	let route = req.query["route"] || req.body["route"];
+
+	res.send(await query_single(`SELECT megallo FROM utvonal
+		WHERE jaratszam = ? ORDER BY utvonal.sorszam ASC LIMIT 1 `, route));
+});
+
+app.get('/laststop', async (req: Request, res: Response) => {
+	let route = req.query["route"] || req.body["route"];
+
+	res.send(await query_single(`SELECT megallo FROM utvonal
+		WHERE jaratszam = ? ORDER BY utvonal.sorszam DESC LIMIT 1 `, route));
 });
 
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import mysql from 'mysql2/promise';
+import mysql, { RowDataPacket } from 'mysql2/promise';
 var pool = mysql.createPool({
 	connectionLimit: 10,
 	host: process.env.DB_HOST,
@@ -17,5 +17,21 @@ export async function query(sql : string, ...params : any[]){
 		console.log(e)
 		return e;
 	}
+
+}
+
+export async function query_flatten(sql : string, ...params : any[]){
+	try{
+		let [rows, _] = await pool.execute({ sql, rowsAsArray: true }, params);
+		return (rows as RowDataPacket).flat();
+	}catch(e){
+		console.log(e)
+		return e;
+	}
+
+}
+
+export async function query_single(sql : string, ...params : any[]){
+	return (await query(sql, ...params) as object[])[0]
 
 }

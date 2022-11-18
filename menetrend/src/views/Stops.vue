@@ -35,15 +35,17 @@ export default defineComponent({
 			{ label: 'Járatok', field: 'jaratok' },
 		]
 
-		const view_route = (r: string) => {
-			router.push({ path: "/route", params: { routename: r } })
+
+		const view_stop = (stop: string) => {
+			console.log(stop)
+			router.push({ name: "stop", query: { stop_name: stop } })
 		}
 
 		return {
 			vehicle_types,
 			stops,
 			headers,
-			view_route
+			view_stop
 		}
 	}
 })
@@ -70,6 +72,7 @@ export default defineComponent({
 				<div class="flex-wrap routes-container" v-if="props.column.field == 'jaratok'">
 					<route-chip v-for="route in props.row.jaratok" :route_number="route" :key="route" />
 				</div>
+				<v-btn v-else-if="props.column.field == 'megallonev'" variant="plain" @click="view_stop(props.row.megallonev)" >{{props.row.megallonev}}</v-btn>
 				<span v-else>
 					{{props.formattedRow[props.column.field]}}
 				</span>
