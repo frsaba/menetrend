@@ -38,6 +38,7 @@ export default defineComponent({
 
 		const view_stop = (stop: string) => {
 			console.log(stop)
+			
 			router.push({ name: "stop", query: { stop_name: stop } })
 		}
 
@@ -66,6 +67,7 @@ export default defineComponent({
 				nextLabel: 'Következő',
 				prevLabel: 'Előző',
 				ofLabel: ' | összesen',
+				rowsPerPageLabel: 'Oldalanként',
 				allLabel: 'All', 
 			}">
 			<template #table-row="props">

@@ -25,3 +25,8 @@ export async function get_route_color(route?: string) {
 	return route_colors_cache[route];
 }
 
+export async function post(path : string, body : object){
+	let response = await axios.post(import.meta.env.VITE_API_URL + "/" + path, body )
+	return response.data;
+}
+

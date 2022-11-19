@@ -9,4 +9,11 @@ loadFonts()
 createApp(App)
   .use(vuetify)
   .use(router)
+  .mixin({
+	methods: {
+		pad2: (s : string) => (s + "").padStart(2, "0")
+	}
+  })
   .mount('#app')
+
+

@@ -11,9 +11,13 @@ export default defineComponent({
 		route_number: String
 	},
 	async setup(props) {
+		const router = useRouter();
 		if (props.route_number == undefined || props.route_number == "") {
-			const router = useRouter();
 			router.push("/");
+		}
+
+		const edit_route = () => {
+			router.push({ name: "edit", query: { route_number: props.route_number } })
 		}
 
 		const color = await get_route_color(props.route_number);
@@ -33,6 +37,7 @@ export default defineComponent({
 		watch(direction, update_timetable)
 
 		async function update_timetable() {
+			console.log(selected_stop)
 			let times: { ora: number, perc: number }[] =
 				await get("timetable", { route: props.route_number, stop: selected_stop.value.megallo, direction: direction.value ? 1 : 0 })
 			timetable.value = _.groupBy(times, x => x.ora)
@@ -48,7 +53,8 @@ export default defineComponent({
 			selected_stop,
 			timetable,
 			direction,
-			first_stop, last_stop
+			first_stop, last_stop,
+			edit_route
 		}
 	},
 	onMounted() {
@@ -61,9 +67,10 @@ export default defineComponent({
 	<div>
 		<v-card class="route-header d-flex align-center ma-1 pa-2 mb-10">
 			<route-chip :route_number="route_number"></route-chip>
-			{{first_stop.megallo}}
+			{{first_stop?.megallo}}
 			<v-btn color="success" icon="mdi-arrow-left-right-bold" @click="direction = !direction"></v-btn>
-			{{last_stop.megallo}}
+			{{last_stop?.megallo}}
+			<v-btn color="primary" variant="plain" icon="mdi-pencil" @click="edit_route"></v-btn>
 		</v-card>
 		<div class="d-flex">
 
@@ -77,8 +84,7 @@ export default defineComponent({
 					</div>
 				</v-timeline-item>
 			</v-timeline>
-
-			<v-table>
+			<v-table v-if="Object.keys(timetable).length > 0">
 				<thead>
 					<tr>
 						<th class="text-left">

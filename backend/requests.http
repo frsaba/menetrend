@@ -18,7 +18,7 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3001/path?route=67 HTTP/1.1
+GET http://localhost:3001/departures?route=67 HTTP/1.1
 content-type: application/json
 
 {
@@ -37,11 +37,22 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3001/firststop HTTP/1.1
+GET http://localhost:3001/routeexists HTTP/1.1
 content-type: application/json
 
 {
-	"route" : "75"
+	"route" : "732"
+}
+
+###
+
+
+POST http://localhost:3001/route HTTP/1.1
+content-type: application/json
+
+{
+	"route" : "XY",
+	"type" : 1
 }
 
 ###
