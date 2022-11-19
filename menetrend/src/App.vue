@@ -52,8 +52,10 @@ export default defineComponent({
 				</v-list>
 			</v-navigation-drawer>
 			<Suspense>
-				<div class="main-content d-flex justify-center ma-3">
-					<router-view />
+				<div class="wrapper">
+					<div class="main-content d-flex justify-center ma-3">
+						<router-view />
+					</div>
 				</div>
 			</Suspense>
 		</v-main>
@@ -62,7 +64,11 @@ export default defineComponent({
 
 
 <style scoped>
-.main-content{
+.main-content {
 	max-width: 1000px;
+}
+.wrapper{
+	display: flex;
+	justify-content: center;
 }
 </style>

@@ -10,7 +10,8 @@ export interface IRouteNumber{
 
 export interface IStopInfo{
 	megallonev : string,
-	cim : string
+	cim : string,
+	jaratok? : string[]
 }
 
 export interface IStopCompatibility{

@@ -72,6 +72,7 @@ export default defineComponent({
 					allLabel: 'All', 
 					rowsPerPageLabel: 'Oldalanként'
 					}"
+				styleClass="vgt-table condensed"
 				:sort-options="{enabled: false}">
 				>
 				<template #table-row="props">
