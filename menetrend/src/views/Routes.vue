@@ -16,41 +16,38 @@ export default defineComponent({
 		const routes = Object.fromEntries(vehicle_types.map((vtype, i) => [vtype.id, route_array[i]]))
 
 		const new_route_dialog = ref(false);
-		const form = ref(false);
+		const new_route_form = ref(false);
 		const new_route_number = ref("");
 		const new_route_type: Ref<undefined | IVehicleTypeInfo> = ref(undefined)
 
+		const required = (v: string) => !!v || 'Ennek a mezőnek a megadása kötelező!'
 
 
-
-		function required(v: string) {
-			return !!v || 'Járatszám megadása kötelező!'
-		}
-
-		async function does_not_exist(v: string) {
+		async function route_does_not_exist(v: string) {
 			if (!v || v == "") return true;
 			const exists = (await get("routeexists", { route: v })).exists;
 			// console.log(exists)
 			return !exists || 'Ez a járat már létezik'
 		}
 
-		async function submit() {
-			if (!form.value || new_route_type == undefined) return
+		async function new_route_submit() {
+			if (!new_route_form.value || new_route_type == undefined) return;
 
-			const res = await post("route", { route: new_route_number.value, type: new_route_type.value?.id })
+			const res = await post("route", { route: new_route_number.value, type: new_route_type.value?.id });
+			if (res.success) router.push({ name: "edit", query: { route_number: new_route_number.value } });
+		}
 
-			if (res.success) {
-				router.push({ name: "route", query: { route_number: new_route_number.value } })
-			}
-
+		function new_type(){
+			router.push({ name: "newvehicletype"});
 		}
 
 		return {
 			vehicle_types,
 			routes,
 			router,
-			new_route_dialog, new_route_number, new_route_type, form,
-			required, does_not_exist, submit,
+			new_route_dialog, new_route_number, new_route_type, new_route_form,
+			required, route_does_not_exist, new_route_submit,
+			new_type
 		}
 	}
 })
@@ -59,6 +56,8 @@ export default defineComponent({
 
 <template>
 	<v-card max-width="1100">
+
+		<!-- #region Új járat dialog -->
 
 		<v-dialog
 			v-model="new_route_dialog">
@@ -74,34 +73,15 @@ export default defineComponent({
 				<v-card-title>
 					Új járat
 				</v-card-title>
-				<v-form v-model="form" @submit.prevent="submit">
-					<v-text-field
-						v-model="new_route_number"
-						:rules="[required, does_not_exist]"
-						class="ma-2"
-						clearable
-						label="Járatszám"></v-text-field>
+				<v-form v-model="new_route_form" @submit.prevent="new_route_submit">
+					<v-text-field v-model="new_route_number" :rules="[required, route_does_not_exist]" class="ma-2" clearable label="Járatszám"></v-text-field>
 
 					<v-select
-
-						v-model="new_route_type"
-						:items="vehicle_types"
-						item-title="nev"
-						item-value="nev"
-						label="Járműtípus"
-						class="ma-2"
-						:rules="[required]"
-						return-object
-						single-line></v-select>
+						v-model="new_route_type" :items="vehicle_types" item-title="nev" item-value="nev"
+						label="Járműtípus" class="ma-2" :rules="[required]" return-object single-line></v-select>
 
 					<v-btn
-						:disabled="!form"
-						block
-						color="success"
-						size="large"
-						type="submit"
-						variant="elevated">
-						Küldés
+						:disabled="!new_route_form" block color="success" size="large" type="submit" variant="elevated"> Küldés
 					</v-btn>
 				</v-form>
 				<v-card-actions>
@@ -109,6 +89,13 @@ export default defineComponent({
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+		<!-- #endregion -->
+
+		<v-btn
+			color="primary"
+			@click="new_type">
+			Új Járműtípus
+		</v-btn>
 
 		<v-list-item v-for="type in vehicle_types" :key="type.id">
 			<h3 class="text-overline">{{type.nev}}</h3>

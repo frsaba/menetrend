@@ -39,7 +39,7 @@ export default defineComponent({
 		]
 
 
-		console.log(terminal_stops)
+		// console.log(terminal_stops)
 		return {
 			color,
 			path,

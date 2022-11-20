@@ -37,7 +37,7 @@ export default defineComponent({
 		watch(direction, update_timetable)
 
 		async function update_timetable() {
-			console.log(selected_stop)
+			// console.log(selected_stop)
 			let times: { ora: number, perc: number }[] =
 				await get("timetable", { route: props.route_number, stop: selected_stop.value.megallo, direction: direction.value ? 1 : 0 })
 			timetable.value = _.groupBy(times, x => x.ora)
