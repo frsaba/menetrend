@@ -30,6 +30,16 @@ router.get('/stops', async (req: Request, res: Response) => {
 	res.send(stops);
 });
 
+router.get('/compatiblestops', async (req: Request, res: Response) => {
+	let route = req.query["route"] || req.body["route"];
+	const typeid = (await query_single(
+		`SELECT id FROM jarmutipus INNER JOIN jarat ON jarat.tipus = jarmutipus.id WHERE jaratszam = ?`, route)).id;
+
+		console.log(typeid)
+	res.send(await query_flatten(
+		`SELECT megallonev FROM megallo INNER JOIN befogad ON befogad.megallo = megallo.megallonev WHERE jarmutipus = ?;`, typeid))
+});
+
 router.get('/routecolors', async (req: Request, res: Response) => {
 	res.send(await query('SELECT jaratszam, szin FROM jarat INNER JOIN jarmutipus ON tipus = jarmutipus.id'));
 });

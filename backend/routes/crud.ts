@@ -50,6 +50,37 @@ router.post('/updatestop', async (req: Request, res: Response) => {
 	res.send({success : affectedRows == 1});
 });
 
+router.post('/deletedeparture', async (req: Request, res: Response) => {
+	console.log(req.body)
+	let route = req.body["route"];
+	let hour = req.body["hour"];
+	let minute =  req.body["minute"];
+	let direction = req.body["direction"];
+
+	if(route == undefined || hour == undefined || minute == undefined || direction == undefined) 
+		return res.send({status: "error", msg: "Missing parameters"})
+
+	const {affectedRows} : {affectedRows : number, insertId : number} = (await query(
+		`DELETE FROM indulas WHERE jaratszam = ? AND ora = ? AND perc = ? AND irany = ?`, route,hour, minute, direction)) as any
+
+	res.send({success : affectedRows == 1});
+});
+
+router.post('/addstoptopath', async (req: Request, res: Response) => {
+
+	let stop = req.body["stop"];
+	let route = req.body["route"];
+	let arrival =  req.body["arrival"];
+	let stop_number =  req.body["stop_number"];
+
+	if(!stop || !route || arrival == undefined || stop_number == undefined) return res.send({status: "error", msg: "Missing parameters"})
+
+	const {affectedRows} : {affectedRows : number, insertId : number} = (await query(
+		`INSERT INTO UTVONAL (megallo, jaratszam, erkezes, sorszam) 
+		VALUES(?,?,?,?)`, stop, route, arrival, stop_number)) as any
+
+	res.send({success : affectedRows == 1});
+});
 
 
 export default router;

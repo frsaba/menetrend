@@ -31,7 +31,7 @@ export async function query_flatten(sql : string, ...params : any[]){
 
 }
 
-export async function query_single(sql : string, ...params : any[]){
+export async function query_single(sql : string, ...params : any[]) : Promise<any>{
 	return (await query(sql, ...params) as object[])[0]
 
 }

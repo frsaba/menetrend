@@ -47,12 +47,11 @@ content-type: application/json
 ###
 
 
-POST http://localhost:3001/route HTTP/1.1
+POST http://localhost:3001/compatiblestops HTTP/1.1
 content-type: application/json
 
 {
-	"route" : "XY",
-	"type" : 1
+	"route" : "67",
 }
 
 ###

@@ -18,3 +18,15 @@ export interface IStopCompatibility{
 	megallonev : string,
 	vehicle_type_id: number
 }
+
+export interface IDepartureInfo{
+	ora : number,
+	perc : number,
+	irany: number,
+	originalIndex? : number
+}
+
+export interface IArrivalInfo{
+	megallo: string,
+	erkezes: number
+}

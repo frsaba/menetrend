@@ -2,7 +2,7 @@ import express, { Express, Request, Response, json } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'
 import morgan from 'morgan'
-import insertRouter from './routes/insert'
+import insertRouter from './routes/crud'
 import routeQueriesRouter from './routes/route-queries'
 
 dotenv.config();
