@@ -31,3 +31,11 @@ export interface IArrivalInfo{
 	megallo: string,
 	erkezes: number
 }
+
+export interface ITravelTimeStats{
+    atlag: number,
+    tipus: string
+}
+
+export type IDensityResult = [string, number[]]
+	

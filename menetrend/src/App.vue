@@ -10,7 +10,8 @@ export default defineComponent({
 
 		const route_items = [
 			{ value: '/', title: "Járatok", prependIcon: "mdi-bus" },
-			{ value: '/stops', title: "Megállók", prependIcon: "mdi-stop" }
+			{ value: '/stops', title: "Megállók", prependIcon: "mdi-stop" },
+			{ value: '/stats', title: "Statisztika", prependIcon: "mdi-chart" }
 		]
 		const router = useRouter();
 		const navigate = (path: string) => {

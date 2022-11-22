@@ -12,3 +12,9 @@ export interface IStopInfo {
 	befogad? : string[]
 
   }
+
+  export interface IDensityInfo {
+    ora: number,
+    tipus: string,
+    db: number
+  }

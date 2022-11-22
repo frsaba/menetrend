@@ -5,7 +5,7 @@ let router = express.Router();
 
 router.post('/route', async (req: Request, res: Response) => {
 
-	console.log(req.body)
+	// console.log(req.body)
 	let route = req.body["route"];
 	let vehicle_type = req.body["type"];
 
@@ -17,7 +17,7 @@ router.post('/route', async (req: Request, res: Response) => {
 
 router.post('/vehicletype', async (req: Request, res: Response) => {
 
-	console.log(req.body)
+	// console.log(req.body)
 	let type_name = req.body["name"];
 	let color :string = req.body["color"];
 	let stops : string[] = req.body["stops"];
@@ -28,7 +28,7 @@ router.post('/vehicletype', async (req: Request, res: Response) => {
 
 	const {affectedRows, insertId} : {affectedRows : number, insertId : number} = (await query(
 		`INSERT INTO jarmutipus (nev, szin) VALUES(?,?)`, type_name, color)) as any
-	console.log(affectedRows,insertId)
+	// console.log(affectedRows,insertId)
 	if(affectedRows != 1) return res.send({success : false});
 	for (let stop of stops){
 		await query(`INSERT INTO befogad (megallo, jarmutipus) VALUES(?,?)`, stop, insertId)
@@ -51,7 +51,7 @@ router.post('/updatestop', async (req: Request, res: Response) => {
 });
 
 router.post('/deletedeparture', async (req: Request, res: Response) => {
-	console.log(req.body)
+	// console.log(req.body)
 	let route = req.body["route"];
 	let hour = req.body["hour"];
 	let minute =  req.body["minute"];

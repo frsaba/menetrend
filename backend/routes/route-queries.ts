@@ -29,7 +29,7 @@ router.get('/stops', async (req: Request, res: Response) => {
 		stop.befogad = await query_flatten(
 			`SELECT nev FROM befogad INNER JOIN jarmutipus ON befogad.jarmutipus = jarmutipus.id 
 			WHERE befogad.megallo =?`, stop.megallonev);
-		console.log(stop.befogad)
+		// console.log(stop.befogad)
 	}
 	res.send(stops);
 });
@@ -39,7 +39,7 @@ router.get('/compatiblestops', async (req: Request, res: Response) => {
 	const typeid = (await query_single(
 		`SELECT id FROM jarmutipus INNER JOIN jarat ON jarat.tipus = jarmutipus.id WHERE jaratszam = ?`, route)).id;
 
-		console.log(typeid)
+		// console.log(typeid)
 	res.send(await query_flatten(
 		`SELECT megallonev FROM megallo INNER JOIN befogad ON befogad.megallo = megallo.megallonev WHERE jarmutipus = ?;`, typeid))
 });
@@ -59,7 +59,7 @@ router.get('/timetable', async (req: Request, res: Response) => {
 	let stop = req.query["stop"];
 	let direction = req.query["direction"];
 
-	console.log(route, stop, direction)
+	// console.log(route, stop, direction)
 	res.send(await query(`
 	SELECT ora + FLOOR((perc + erkezes) / 60) % 24 as ora, 
 	(perc + erkezes) % 60 as perc 
