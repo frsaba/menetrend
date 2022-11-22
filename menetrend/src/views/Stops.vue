@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router';
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next';
 import RouteChip from '@/components/RouteChip.vue';
+import VehicleTypeChip from '@/components/VehicleTypeChip.vue';
 // add to component
 
 
@@ -14,6 +15,7 @@ export default defineComponent({
 	components: {
 		VueGoodTable,
 		RouteChip,
+		VehicleTypeChip,
 	},
 	async setup(props) {
 		const router = useRouter();
@@ -28,8 +30,9 @@ export default defineComponent({
 		const headers = [
 			{ label: 'Megállónév', align: 'start', field: 'megallonev' },
 			{ label: 'Cím', field: 'cim' },
+			{ label: '', field: 'edit' },
+			{ label: '', field: 'compatibility' },
 			{ label: 'Járatok', field: 'jaratok' },
-			{ label: '', field: 'after' },
 		]
 
 		const edited_stop: Ref<undefined | IStopInfo> = ref(undefined)
@@ -75,7 +78,7 @@ export default defineComponent({
 <template>
 	<div class="mx-auto d-flex wrapper">
 		<vue-good-table
-			max-width="1100"
+			max-width="1300"
 			:columns="headers"
 			:rows="stops"
 			max-height="75%"
@@ -94,10 +97,13 @@ export default defineComponent({
 				<div class="flex-wrap routes-container" v-if="props.column.field == 'jaratok'">
 					<route-chip v-for="route in props.row.jaratok" :route_number="route" :key="route" />
 				</div>
+				<div class="flex-wrap routes-container" v-if="props.column.field == 'compatibility'">
+					<vehicle-type-chip size="x-small" v-for="t in props.row.befogad" :key="props.row.megallonev + t" :type="t" />
+				</div>
 
 				<!-- EDIT MODE -->
 				<template v-if="edited_stop == props.row">
-					<v-btn v-if="props.column.field == 'after'" icon="mdi-content-save" color="success" @click="submit"></v-btn>
+					<v-btn v-if="props.column.field == 'edit'" icon="mdi-content-save" color="success" @click="submit"></v-btn>
 					<v-text-field v-else-if="props.column.field == 'megallonev'" v-model="new_stop_name" />
 					<v-textarea v-else-if="props.column.field == 'cim'" v-model="new_stop_address" rows="2" />
 
@@ -105,7 +111,7 @@ export default defineComponent({
 
 				<!-- DISPLAY MODE -->
 				<template v-else>
-					<v-btn v-if="props.column.field == 'after' && !edited_stop" variant="plain" icon="mdi-pencil" @click="edit_stop(props.row)"></v-btn>
+					<v-btn v-if="props.column.field == 'edit' && !edited_stop" variant="plain" icon="mdi-pencil" @click="edit_stop(props.row)"></v-btn>
 					<v-btn v-else-if="props.column.field == 'megallonev'" variant="plain" @click="view_stop(props.row.megallonev)">{{props.row.megallonev}}</v-btn>
 					<span class="text-caption" v-else-if="props.column.field == 'cim'">
 						{{props.formattedRow[props.column.field]}}

@@ -12,6 +12,7 @@ export interface IStopInfo{
 	megallonev : string,
 	cim : string,
 	jaratok? : string[]
+	befogad? : string[]
 }
 
 export interface IStopCompatibility{

@@ -9,7 +9,7 @@ export async function get(path: string, params?: any) {
 	return response.data;
 }
 
-var vehicle_types_cache: IVehicleTypeInfo[];
+var vehicle_type_colors_cache: { [key: string]: string } = {}
 var route_colors_cache: { [key: string]: string } = {}
 
 
@@ -24,6 +24,18 @@ async function update_route_colors_cache() {
 }
 await update_route_colors_cache();
 
+
+async function update_vehicle_type_colors_cache() {
+	vehicle_type_colors_cache = {};
+	let types: IVehicleTypeInfo[] = await get("vehicle_types")
+	
+	for (let t of types) {
+		vehicle_type_colors_cache[t.nev] = "#" + t.szin
+	}
+}
+await update_vehicle_type_colors_cache();
+
+
 export async function get_route_color(route?: string) {
 
 	if (route == undefined) return "#000000"
@@ -31,6 +43,15 @@ export async function get_route_color(route?: string) {
 		await update_route_colors_cache();
 
 	return route_colors_cache[route];
+}
+
+export async function get_vehicle_type_color(type?: string) {
+
+	if (type == undefined) return "#000000"
+	if( !(type in vehicle_type_colors_cache) )
+		await update_vehicle_type_colors_cache();
+
+	return vehicle_type_colors_cache[type];
 }
 
 export async function post(path: string, body: object) {

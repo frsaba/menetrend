@@ -26,6 +26,10 @@ router.get('/stops', async (req: Request, res: Response) => {
 		let routes = (routes_array as { jarat: string }[]).map(r => r.jarat);
 		// routes: [ '1' ,'76' ...]
 		stop.jaratok = routes;
+		stop.befogad = await query_flatten(
+			`SELECT nev FROM befogad INNER JOIN jarmutipus ON befogad.jarmutipus = jarmutipus.id 
+			WHERE befogad.megallo =?`, stop.megallonev);
+		console.log(stop.befogad)
 	}
 	res.send(stops);
 });
