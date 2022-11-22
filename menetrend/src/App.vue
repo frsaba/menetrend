@@ -9,9 +9,9 @@ export default defineComponent({
 		const drawer = ref(true);
 
 		const route_items = [
-			{ value: '/', title: "Járatok", prependIcon: "mdi-bus" },
-			{ value: '/stops', title: "Megállók", prependIcon: "mdi-stop" },
-			{ value: '/stats', title: "Statisztika", prependIcon: "mdi-chart" }
+			{ value: '/', title: "Járatok", prependIcon: "mdi-bus-multiple" },
+			{ value: '/stops', title: "Megállók", prependIcon: "mdi-bus-stop-covered" },
+			{ value: '/stats', title: "Statisztika", prependIcon: "mdi-chart-box" }
 		]
 		const router = useRouter();
 		const navigate = (path: string) => {

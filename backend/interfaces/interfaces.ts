@@ -18,3 +18,9 @@ export interface IStopInfo {
     tipus: string,
     db: number
   }
+
+  export interface IRouteLengthInfo{
+    jaratszam: string,
+    hossz: number
+    tipus: string
+  }

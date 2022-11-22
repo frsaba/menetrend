@@ -39,3 +39,8 @@ export interface ITravelTimeStats{
 
 export type IDensityResult = [string, number[]]
 	
+export interface IRouteLengthInfo{
+    jaratszam: string,
+    hossz: number
+    tipus: string
+  }

@@ -4,7 +4,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 import _ from 'lodash';
 import { defineComponent, ref, Ref } from 'vue'
 import { get, get_vehicle_type_color } from '@/utils/db-functions'
-import { IDensityResult, ITravelTimeStats } from '@/types';
+import { IDensityResult, IRouteLengthInfo, ITravelTimeStats } from '@/types';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -51,48 +51,55 @@ export default defineComponent({
 			}
 		}
 
-		const density : IDensityResult[] = await get("stats/density")
-		console.log(density)
+		const density: IDensityResult[] = await get("stats/density")
 		const chart2_data = {
 			labels: _.range(24),
 			datasets: await Promise.all(density.map(
 				async r => ({
-					label: r[0], 
-					data: r[1], 
+					label: r[0],
+					data: r[1],
 					backgroundColor: await get_vehicle_type_color(r[0])
-					})))
-				// {
-				// 	label: 'Villamos',
-				// 	data: [2, 3, 4],
-				// 	backgroundColor: "yellow",
-				// },
-				// {
-				// 	label: 'Busz',
-				// 	data: [2, 3, 4],
-				// 	backgroundColor: "blue"
-				// },
-				// {
-				// 	label: 'Troli',
-				// 	data: [4, 1, 2],
-				// 	backgroundColor: "green",
-				// },
-			
+				})))
+
 		}
-		console.log(chart2_data)
+
+		const longest_routes: IRouteLengthInfo[] = await get("stats/longestroutes");
+		// console.log(avg_travel_times.map(async x => await get_vehicle_type_color(x.tipus)));
+		const chart3_data = {
+			labels: longest_routes.map(x => x.jaratszam),
+			datasets: [{
+				label: "Útvonalhossz",
+				data: longest_routes.map(r => r.hossz),
+				backgroundColor: await Promise.all(longest_routes.map(x => get_vehicle_type_color(x.tipus)))
+			}]
+		};
+		const chart3_options = {
+			plugins: {
+				title: {
+					display: true,
+					text: 'Leghosszabb útvonalak'
+				},
+			},
+			responsive: true,
+			maintainAspectRatio: false,
+			legend:{display: false}
+		}
 
 
 		return {
 			chart1_data,
 			chart1_options,
 			chart2_data,
-			chart2_options
+			chart2_options,
+			chart3_data,
+			chart3_options
 		}
 	},
 })
 </script>
 
 <template>
-	<div>
+	<div class="wrapper">
 
 		<div class="chart1">
 
@@ -109,13 +116,26 @@ export default defineComponent({
 				:width="800"
 				:height="400" />
 		</div>
+		<div class="chart3">
+
+			<Bar
+				:chart-options="chart3_options"
+				:chart-data="chart3_data"
+				:width="800"
+				:height="300" />
+		</div>
 
 	</div>
 </template>
 
 <style scoped>
-/* .chart1{
-	max-height: 300px;
-} */
+.chart1 {
+	max-width: 300px;
+}
+.wrapper{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 </style>
 
