@@ -36,7 +36,7 @@ router.get('/longestroutes', async (req: Request, res: Response) => {
 		`SELECT jarat.jaratszam, COUNT(*) as hossz, jarmutipus.nev as tipus 
 		FROM utvonal INNER JOIN jarat ON utvonal.jaratszam = jarat.jaratszam 
 		INNER JOIN jarmutipus ON jarmutipus.id = jarat.tipus 
-		GROUP BY utvonal.jaratszam ORDER BY hossz DESC`) as any;
+		GROUP BY utvonal.jaratszam ORDER BY hossz DESC LIMIT 20`) as any;
 
 	// const groups = _.groupBy(rows, x => x.tipus);
 	res.send(rows)

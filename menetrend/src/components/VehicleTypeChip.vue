@@ -42,3 +42,10 @@ export default defineComponent({
 		<span v-else> {{first_letter}}</span>
 	</v-chip>
 </template>
+
+<style scoped>
+span{
+	text-align: center;
+	min-width: 1.5em;
+}
+</style>

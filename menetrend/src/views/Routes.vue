@@ -56,13 +56,14 @@ export default defineComponent({
 
 <template>
 	<v-card max-width="1100">
-
+		<v-spacer></v-spacer>
 		<!-- #region Új járat dialog -->
 
 		<v-dialog
 			v-model="new_route_dialog">
 			<template v-slot:activator="{ props }">
 				<v-btn
+					class="ma-2"
 					color="primary"
 					v-bind="props">
 					Új járat
@@ -92,6 +93,7 @@ export default defineComponent({
 		<!-- #endregion -->
 
 		<v-btn
+			class="ma-2"
 			color="primary"
 			@click="new_type">
 			Új Járműtípus

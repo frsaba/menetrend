@@ -84,7 +84,7 @@ export default defineComponent({
 </script>
 <template>
 	<div>
-		<v-card class="route-header d-flex align-center ma-1 pa-2 mb-10">
+		<v-card class="route-header d-flex align-center ma-1 pa-5 mb-10">
 			<h1>Szerkesztés</h1>
 			<route-chip :route_number="route_number" size="large"></route-chip>
 		</v-card>
@@ -178,7 +178,8 @@ export default defineComponent({
 	align-items: center;
 }
 .route-header {
-	gap: 15px;
+	min-width: 1000px;
+	gap: 25px;
 }
 .panel {
 	min-width: 700px;

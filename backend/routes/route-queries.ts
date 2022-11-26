@@ -1,4 +1,4 @@
-import express, {Request, Response} from 'express'
+import express, { Request, Response } from 'express'
 import { query, query_flatten, query_single } from '../db-utils';
 import { IJarat, IStopInfo } from '../interfaces/interfaces'
 
@@ -39,7 +39,7 @@ router.get('/compatiblestops', async (req: Request, res: Response) => {
 	const typeid = (await query_single(
 		`SELECT id FROM jarmutipus INNER JOIN jarat ON jarat.tipus = jarmutipus.id WHERE jaratszam = ?`, route)).id;
 
-		// console.log(typeid)
+	// console.log(typeid)
 	res.send(await query_flatten(
 		`SELECT megallonev FROM megallo INNER JOIN befogad ON befogad.megallo = megallo.megallonev WHERE jarmutipus = ?;`, typeid))
 });
@@ -60,12 +60,24 @@ router.get('/timetable', async (req: Request, res: Response) => {
 	let direction = req.query["direction"];
 
 	// console.log(route, stop, direction)
-	res.send(await query(`
-	SELECT ora + FLOOR((perc + erkezes) / 60) % 24 as ora, 
-	(perc + erkezes) % 60 as perc 
-	FROM utvonal INNER JOIN indulas ON utvonal.jaratszam = indulas.jaratszam
-	WHERE indulas.jaratszam = ? AND irany = ?
-	AND utvonal.megallo = ?`, route, direction, stop));
+	if (Number(direction) == 1) {
+		res.send(await query(`
+		SELECT ora + FLOOR((perc + erkezes) / 60) % 24 as ora, 
+		(perc + erkezes) % 60 as perc 
+		FROM utvonal INNER JOIN indulas ON utvonal.jaratszam = indulas.jaratszam
+		WHERE indulas.jaratszam = ? AND irany = 1
+		AND utvonal.megallo = ?`, route, stop));
+	} else {
+		//visszaféle kell értelmezni az érkezéseket, tehát max(erkezes) - erkezes
+		res.send(await query(`
+		SELECT ora + FLOOR(
+			(perc + (SELECT MAX(utvonal.erkezes) FROM utvonal WHERE jaratszam = ?) - erkezes) / 60) % 24 as ora, 
+			(perc + (SELECT MAX(utvonal.erkezes) FROM utvonal WHERE jaratszam = ?) - erkezes)  % 60 as perc 
+		FROM utvonal INNER JOIN indulas ON utvonal.jaratszam = indulas.jaratszam
+		WHERE indulas.jaratszam = ? AND irany = 0
+		AND utvonal.megallo = ?;`, route, route, route, stop));
+	}
+
 });
 
 router.get('/routesatstop', async (req: Request, res: Response) => {
@@ -117,17 +129,17 @@ router.get('/laststop', async (req: Request, res: Response) => {
 router.get('/routeexists', async (req: Request, res: Response) => {
 	let route = req.query["route"] || req.body["route"];
 
-	if(!route) return res.send(false)
+	if (!route) return res.send(false)
 
 	const response = await query_single(`SELECT * FROM jarat
 		WHERE jaratszam LIKE ?`, route);
-	res.send({exists : !!response});
+	res.send({ exists: !!response });
 });
 
 router.get('/departures', async (req: Request, res: Response) => {
 	let route = req.query["route"] || req.body["route"];
 
-	if(!route) return res.send({status: "error", msg: "Missing parameter: route"})
+	if (!route) return res.send({ status: "error", msg: "Missing parameter: route" })
 
 	res.send(await query(`SELECT ora, perc, irany FROM indulas WHERE jaratszam = ?`, route))
 });
